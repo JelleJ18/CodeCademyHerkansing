@@ -12,8 +12,10 @@ public class SceneManager {
 
   private HashMap<SceneType, SceneWrapper> scenes;
   private SceneType currentScene = splash;
+  private Stage mainStage;
 
   public SceneManager(Stage mainStage) {
+    this.mainStage = mainStage;
     this.scenes = new HashMap<>(Map.ofEntries(
         Map.entry(SceneType.HOME, new MainHomeGui(mainStage)),
         Map.entry(SceneType.CURSIST, new CursistGUI(mainStage)),

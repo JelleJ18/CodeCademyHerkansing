@@ -5,15 +5,14 @@ import CodeCademy.Database.AppBehaviour;
 import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CreateCursistGUI extends SceneWrapper {
   Button button;
-  private TableView<Cursist> tableView = new TableView<>();
-  private Button refresh = new Button("Refresh");
-  private Button home = new Button("Home");
-  private MainHomeGui homeGUI;
+  private Button homeBtn = new Button("Home");
+  private Button backBtn = new Button("Back");
 
   // Inputs
   private TextField nameField;
@@ -50,9 +49,13 @@ public class CreateCursistGUI extends SceneWrapper {
     countryField = new TextField();
 
     Button saveButton = new Button("Opslaan");
-    saveButton.setOnMouseClicked(this::submitData);
+    saveButton.setOnAction(this::submitData);
+    homeBtn.setOnAction(this::goHome);
+    backBtn.setOnAction(this::goBack);
 
-    VBox layout = new VBox(10, nameLabel, nameField, emailLabel, emailField,
+    HBox hBox = new HBox(homeBtn, backBtn);
+
+    VBox layout = new VBox(hBox, nameLabel, nameField, emailLabel, emailField,
         dobLabel, dobPicker, genderLabel, genderComboBox,
         addressLabel, addressArea, cityLabel, cityField, countryLabel, countryField, saveButton);
 
@@ -77,5 +80,15 @@ public class CreateCursistGUI extends SceneWrapper {
     }
 
     GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSIST);
+  }
+
+  private void goHome(Event e) {
+    GuiMain.SCENE_MANAGER.switchScene(SceneType.HOME);
+    stage.setMaximized(true);
+  }
+
+  private void goBack(Event e) {
+    GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSIST);
+    stage.setMaximized(true);
   }
 }

@@ -80,10 +80,12 @@ public class CursistGUI extends SceneWrapper {
 
   private void CreateCursist(Event e) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSISTCREATE);
+    stage.setMaximized(true);
   }
 
   private void GoHome(Event e) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.HOME);
+    stage.setMaximized(true);
   }
 
   private void Refresh(Event e) {
