@@ -1,6 +1,7 @@
 package CodeCademy.GUI;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -14,11 +15,15 @@ public class MainHomeGui extends SceneWrapper {
 
   public MainHomeGui(Stage stage) {
     super(stage);
-    stage.setMaximized(true);
+    stage.show();
     stage.setTitle("CodeCademy Home");
 
     HBox hbox = new HBox(cursistBtn, cursusBtn);
+    hbox.setSpacing(10);
+
     VBox vbox = new VBox(hbox);
+    vbox.setPadding(new Insets(10));
+    hbox.setAlignment(javafx.geometry.Pos.CENTER);
 
     this.scene = new Scene(vbox);
 
@@ -31,6 +36,5 @@ public class MainHomeGui extends SceneWrapper {
   private void OpenCursist(ActionEvent event) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSIST);
     stage.setTitle("Cursist");
-    stage.setMaximized(true);
   }
 }

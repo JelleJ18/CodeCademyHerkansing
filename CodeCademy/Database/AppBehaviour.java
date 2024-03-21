@@ -9,6 +9,8 @@ import java.util.List;
 
 import CodeCademy.MainConnection;
 import CodeCademy.Contents.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class AppBehaviour {
   private static Connection connection = MainConnection.connection;
@@ -16,6 +18,16 @@ public class AppBehaviour {
   // Cursist methoden
   public static void createCursist(Cursist cursist) {
     try {
+      if (cursist.getName().isEmpty() ||
+          cursist.getEmail().isEmpty() ||
+          cursist.getDateOfBirth() == null ||
+          cursist.getGender().isEmpty() ||
+          cursist.getAddress().isEmpty() ||
+          cursist.getHometown().isEmpty() ||
+          cursist.getCountry().isEmpty()) {
+        throw new IllegalArgumentException("All fields are required");
+      }
+
       PreparedStatement insertStatement = connection.prepareStatement(
           "INSERT INTO Cursist(naam, email, dateOfBirth, gender, address, hometown, country)\n" +
               "VALUES(?, ?, ?, ?, ?, ?, ?)");
@@ -30,6 +42,9 @@ public class AppBehaviour {
       insertStatement.executeUpdate();
     } catch (SQLException e) {
       handleSQLException(e);
+    } catch (IllegalArgumentException e) {
+      // Show an alert to the user indicating that the date of birth is required
+      showErrorAlert("Error", "Not all the values have been assigned!");
     }
   }
 
@@ -66,8 +81,17 @@ public class AppBehaviour {
     return list;
   }
 
+  // Handles sqlerrors
   private static void handleSQLException(SQLException e) {
-    // Implementeer deze methode om met SQL-uitzonderingen om te gaan
     e.printStackTrace();
+  }
+
+  // Show Alert for user, can be used anywhere
+  private static void showErrorAlert(String title, String message) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 }

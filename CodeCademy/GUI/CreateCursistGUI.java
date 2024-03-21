@@ -3,8 +3,10 @@ package CodeCademy.GUI;
 import CodeCademy.Contents.Cursist;
 import CodeCademy.Database.AppBehaviour;
 import javafx.event.Event;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,9 +30,11 @@ public class CreateCursistGUI extends SceneWrapper {
 
     Label nameLabel = new Label("Name: ");
     nameField = new TextField();
+    nameField.setMaxWidth(500);
 
     Label emailLabel = new Label("E-mail:");
     emailField = new TextField();
+    emailField.setMaxWidth(500);
 
     Label dobLabel = new Label("Geboortedatum:");
     dobPicker = new DatePicker();
@@ -41,12 +45,15 @@ public class CreateCursistGUI extends SceneWrapper {
 
     Label addressLabel = new Label("Adres:");
     addressArea = new TextArea();
+    addressArea.setMaxWidth(500);
 
     Label cityLabel = new Label("Woonplaats:");
     cityField = new TextField();
+    cityField.setMaxWidth(500);
 
     Label countryLabel = new Label("Land:");
     countryField = new TextField();
+    countryField.setMaxWidth(500);
 
     Button saveButton = new Button("Opslaan");
     saveButton.setOnAction(this::submitData);
@@ -54,10 +61,14 @@ public class CreateCursistGUI extends SceneWrapper {
     backBtn.setOnAction(this::goBack);
 
     HBox hBox = new HBox(homeBtn, backBtn);
+    hBox.setSpacing(10);
 
     VBox layout = new VBox(hBox, nameLabel, nameField, emailLabel, emailField,
         dobLabel, dobPicker, genderLabel, genderComboBox,
         addressLabel, addressArea, cityLabel, cityField, countryLabel, countryField, saveButton);
+
+    layout.setPadding(new Insets(10));
+    layout.setSpacing(5);
 
     this.scene = new Scene(layout);
   }
@@ -75,7 +86,7 @@ public class CreateCursistGUI extends SceneWrapper {
               cityField.getText(),
               countryField.getText()));
     } catch (NumberFormatException error) {
-      System.out.println(error.getMessage());
+      showErrorMessage("Not all values are assigned!");
       return;
     }
 
@@ -84,11 +95,17 @@ public class CreateCursistGUI extends SceneWrapper {
 
   private void goHome(Event e) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.HOME);
-    stage.setMaximized(true);
   }
 
   private void goBack(Event e) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSIST);
-    stage.setMaximized(true);
+  }
+
+  private void showErrorMessage(String message) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 }

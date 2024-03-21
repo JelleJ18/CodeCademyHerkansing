@@ -3,8 +3,10 @@ package CodeCademy.GUI;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class SceneManager {
@@ -15,22 +17,26 @@ public class SceneManager {
   private Stage mainStage;
 
   public SceneManager(Stage mainStage) {
-    this.mainStage = mainStage;
     this.scenes = new HashMap<>(Map.ofEntries(
         Map.entry(SceneType.HOME, new MainHomeGui(mainStage)),
         Map.entry(SceneType.CURSIST, new CursistGUI(mainStage)),
         Map.entry(SceneType.CURSISTCREATE, new CreateCursistGUI(mainStage))));
 
     this.scenes.get(splash).show();
-    mainStage.setMinHeight(768);
-    mainStage.setMinWidth(1024);
-    mainStage.setMaximized(true);
+    this.mainStage = mainStage;
   }
 
   public void switchScene(SceneType scene) {
     System.out.println("Switching");
     this.scenes.get(scene).show();
     this.currentScene = scene;
+    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    mainStage.setX(primaryScreenBounds.getMinX());
+    mainStage.setY(primaryScreenBounds.getMinY());
+    mainStage.setWidth(primaryScreenBounds.getWidth());
+    mainStage.setHeight(primaryScreenBounds.getHeight());
+    mainStage.setMaximized(true);
+    mainStage.show();
   }
 
   public static void showErrorDialog(String message) {

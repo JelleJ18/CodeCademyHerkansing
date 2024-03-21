@@ -36,6 +36,7 @@ public class CursistGUI extends SceneWrapper {
 
   public CursistGUI(Stage stage) {
     super(stage);
+    stage.show();
     nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
     emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
@@ -80,12 +81,10 @@ public class CursistGUI extends SceneWrapper {
 
   private void CreateCursist(Event e) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSISTCREATE);
-    stage.setMaximized(true);
   }
 
   private void GoHome(Event e) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.HOME);
-    stage.setMaximized(true);
   }
 
   private void Refresh(Event e) {
