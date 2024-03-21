@@ -35,6 +35,10 @@ public class SceneManager {
     mainStage.setY(primaryScreenBounds.getMinY());
     mainStage.setWidth(primaryScreenBounds.getWidth());
     mainStage.setHeight(primaryScreenBounds.getHeight());
+
+    // Eerst het maximizen op false zetten, omdat er anders een fout zit met de UI
+    // te scalen. (ik vond geen andere oplossing hiervoor).
+    mainStage.setMaximized(false);
     mainStage.setMaximized(true);
     mainStage.show();
   }

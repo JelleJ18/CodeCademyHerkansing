@@ -15,7 +15,6 @@ public class MainHomeGui extends SceneWrapper {
 
   public MainHomeGui(Stage stage) {
     super(stage);
-    stage.show();
     stage.setTitle("CodeCademy Home");
 
     HBox hbox = new HBox(cursistBtn, cursusBtn);

@@ -38,10 +38,12 @@ public class CreateCursistGUI extends SceneWrapper {
 
     Label dobLabel = new Label("Geboortedatum:");
     dobPicker = new DatePicker();
+    dobPicker.setMaxWidth(200);
 
     Label genderLabel = new Label("Geslacht:");
     genderComboBox = new ComboBox<>();
     genderComboBox.getItems().addAll("Man", "Vrouw", "Anders");
+    genderComboBox.setMaxWidth(200);
 
     Label addressLabel = new Label("Adres:");
     addressArea = new TextArea();
@@ -62,6 +64,7 @@ public class CreateCursistGUI extends SceneWrapper {
 
     HBox hBox = new HBox(homeBtn, backBtn);
     hBox.setSpacing(10);
+    hBox.setAlignment(javafx.geometry.Pos.CENTER);
 
     VBox layout = new VBox(hBox, nameLabel, nameField, emailLabel, emailField,
         dobLabel, dobPicker, genderLabel, genderComboBox,
@@ -69,6 +72,7 @@ public class CreateCursistGUI extends SceneWrapper {
 
     layout.setPadding(new Insets(10));
     layout.setSpacing(5);
+    layout.setAlignment(javafx.geometry.Pos.TOP_CENTER);
 
     this.scene = new Scene(layout);
   }
