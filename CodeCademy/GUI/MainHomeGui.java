@@ -30,10 +30,16 @@ public class MainHomeGui extends SceneWrapper {
     cursusBtn.setStyle("-fx-font-size: 14;");
 
     cursistBtn.setOnAction(this::OpenCursist);
+    cursusBtn.setOnAction(this::OpenCursus);
   }
 
   private void OpenCursist(ActionEvent event) {
     GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSIST);
     stage.setTitle("Cursist");
+  }
+
+  private void OpenCursus(ActionEvent event) {
+    GuiMain.SCENE_MANAGER.switchScene(SceneType.CURSUS);
+    stage.setTitle("Cursus");
   }
 }

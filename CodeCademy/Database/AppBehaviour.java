@@ -1,11 +1,8 @@
 package CodeCademy.Database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
 
 import CodeCademy.MainConnection;
 import CodeCademy.Contents.*;
@@ -33,7 +30,7 @@ public class AppBehaviour {
               "VALUES(?, ?, ?, ?, ?, ?, ?)");
       insertStatement.setString(1, cursist.getName());
       insertStatement.setString(2, cursist.getEmail());
-      insertStatement.setDate(3, java.sql.Date.valueOf(cursist.getDateOfBirth()));
+      insertStatement.setDate(3, Date.valueOf(cursist.getDateOfBirth()));
       insertStatement.setString(4, cursist.getGender());
       insertStatement.setString(5, cursist.getAddress());
       insertStatement.setString(6, cursist.getHometown());
@@ -79,6 +76,73 @@ public class AppBehaviour {
     }
 
     return list;
+  }
+
+  public static void editCursist(Cursist cursist) {
+    try {
+      PreparedStatement updateStatement = connection.prepareStatement(
+          "UPDATE Cursist SET email = ?, dateOfBirth = ?, gender = ?, address = ?, hometown = ?, country = ?\n" +
+              "WHERE naam = ?");
+
+      updateStatement.setString(1, cursist.getEmail());
+      updateStatement.setDate(2, Date.valueOf(cursist.getDateOfBirth()));
+      updateStatement.setString(3, cursist.getGender());
+      updateStatement.setString(4, cursist.getAddress());
+      updateStatement.setString(5, cursist.getHometown());
+      updateStatement.setString(6, cursist.getCountry());
+      updateStatement.setString(7, cursist.getName());
+
+      updateStatement.executeUpdate();
+    } catch (SQLException e) {
+      handleSQLException(e);
+    }
+  }
+
+  public static List<Cursus> getCursussen() {
+    return getCursussen(0);
+  }
+
+  public static List<Cursus> getCursussen(int offset) {
+    ArrayList<Cursus> list = new ArrayList<>();
+
+    try {
+      PreparedStatement selectCursus = connection.prepareStatement(
+          "SELECT * FROM Cursus ORDER BY cursusnaam OFFSET ? ROWS FETCH NEXT 100 ROWS ONLY");
+
+      selectCursus.setInt(1, offset);
+
+      ResultSet rs = selectCursus.executeQuery();
+
+      while (rs.next()) {
+        list.add(new Cursus(
+            rs.getString("cursusnaam"),
+            rs.getString("onderwerp"),
+            rs.getString("introductietekst"),
+            rs.getString("niveau")));
+      }
+
+    } catch (SQLException e) {
+      handleSQLException(e);
+    }
+
+    return list;
+  }
+
+  public static void editCursus(Cursus cursus) {
+    try {
+      PreparedStatement updateStatement = connection.prepareStatement(
+          "UPDATE Cursus SET onderwerp = ?, introductietekst = ?, niveau = ?\n" +
+              "WHERE cursusnaam = ?");
+
+      updateStatement.setString(1, cursus.getOnderwerp().get());
+      updateStatement.setString(2, cursus.getIntroductietekst().get());
+      updateStatement.setString(3, cursus.getNiveau().get());
+      updateStatement.setString(4, cursus.getCursusnaam().get());
+
+      updateStatement.executeUpdate();
+    } catch (SQLException e) {
+      handleSQLException(e);
+    }
   }
 
   // Handles sqlerrors

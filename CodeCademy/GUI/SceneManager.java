@@ -20,7 +20,8 @@ public class SceneManager {
     this.scenes = new HashMap<>(Map.ofEntries(
         Map.entry(SceneType.HOME, new MainHomeGui(mainStage)),
         Map.entry(SceneType.CURSIST, new CursistGUI(mainStage)),
-        Map.entry(SceneType.CURSISTCREATE, new CreateCursistGUI(mainStage))));
+        Map.entry(SceneType.CURSISTCREATE, new CreateCursistGUI(mainStage)),
+        Map.entry(SceneType.CURSUS, new CursusGUI(mainStage))));
 
     this.scenes.get(splash).show();
     this.mainStage = mainStage;
